@@ -1,3 +1,8 @@
+" check_vundle.vim
+if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
+    silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+endif
+
 " 启用搜索高亮
 set hlsearch
 " 启用实时搜索
@@ -18,7 +23,7 @@ nnoremap <leader>w :w<CR>
 nnoremap <leader>q :q<CR>
 nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
-nnoremap <leader>i :PluginInstal<CR>
+nnoremap <leader>i :PluginInstall<CR>
 nnoremap <leader>t :TagbarToggle<CR>    " 通过 t 打开/关闭Tagbar
 
 " set the runtime path to include Vundle and initialize
