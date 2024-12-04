@@ -26,6 +26,7 @@ nnoremap <leader>e :NERDTreeToggle<CR>
 nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>i :PluginInstall<CR>
 nnoremap <leader>t :TagbarToggle<CR>    " 通过 t 打开/关闭Tagbar
+nnoremap <leader>p :set paste!<CR>
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
