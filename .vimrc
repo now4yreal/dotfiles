@@ -2,6 +2,8 @@
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 endif
+set encoding=utf-8
+set fileencodings=utf-8,gbk,cp936
 
 set clipboard=unnamedplus
 " 启用搜索高亮
