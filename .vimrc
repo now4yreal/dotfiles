@@ -54,7 +54,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tomasr/molokai'
 Plugin 'Lokaltog/vim-easymotion'
-
+Plugin 'lfv89/vim-interestingwords'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -80,3 +80,8 @@ let g:airline_symbols.branch = ''
 
 " show match count must at end
 set shortmess-=S
+
+" interestringwords
+nnoremap <silent> <leader>z :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>z :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>x :call UncolorAllWords()<cr>
