@@ -55,6 +55,9 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tomasr/molokai'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'lfv89/vim-interestingwords'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'jackguo380/vim-lsp-cxx-highlight'
+Plugin 'tpope/vim-commentary'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -85,3 +88,36 @@ set shortmess-=S
 nnoremap <silent> <leader>z :call InterestingWords('n')<cr>
 vnoremap <silent> <leader>z :call InterestingWords('v')<cr>
 nnoremap <silent> <leader>x :call UncolorAllWords()<cr>
+
+" Register ccls C++ lanuage server.
+if executable('ccls')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'compile_commands.json'))},
+      \ 'initialization_options': {
+      \   'highlight': { 'lsRanges' : v:true },
+	  \   'cache': {'directory': expand('~/.ccls-cache/ccls') },
+	  \   "index": {"initialBlacklist": ["."]},
+	  \ },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
+
+" Highlight local variables Green
+"hi LspCxxHlSymFunctionVariable ctermfg=Green guifg=#00FF00 cterm=none gui=none
+
+" Highlight statics Red
+"hi LspCxxHlSymUnknownStatic ctermfg=Red guifg=#FF0000 cterm=none gui=none
+
+" Highlight globals Red with Bold text
+hi LspCxxHlSymFileVariableNone ctermfg=Blue
+hi LspCxxHlSymVariableStatic ctermfg=Blue
+hi LspCxxHlSymUnknownVariableNone ctermfg=Blue
+
+"nn <silent> <M-d> :LspDefinition<cr>
+"nn <silent> <M-r> :LspReferences<cr>
+"nn <f2> :LspRename<cr>
+"nn <silent> <M-a> :LspWorkspaceSymbol<cr>
+"nn <silent> <M-l> :LspDocumentSymbol<cr>
+
