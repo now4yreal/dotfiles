@@ -94,8 +94,8 @@ nnoremap <silent> <leader>x :call UncolorAllWords()<cr>
 if executable('ccls')
    au User lsp_setup call lsp#register_server({
       \ 'name': 'ccls',
-      \ 'cmd': {server_info->['ccls', '--log-file', '/tmp/ccls-log.txt']},
       \ 'root_uri': {server_info->lsp#utils#path_to_uri(expand('~'))},
+      \ 'cmd': {server_info->['ccls']},
       \ 'initialization_options': {
       \   'highlight': { 'lsRanges' : v:true },
 	  \   'cache': {'directory': expand('~/.ccls-cache/ccls') },
