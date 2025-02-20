@@ -2,6 +2,8 @@
 if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 endif
+set encoding=utf-8
+set fileencodings=utf-8,gbk,cp936
 
 set clipboard=unnamedplus
 " 启用搜索高亮
@@ -38,6 +40,7 @@ nnoremap <leader>r :source $MYVIMRC<CR>
 nnoremap <leader>i :PluginInstall<CR>
 nnoremap <leader>t :TagbarToggle<CR>    " 通过 t 打开/关闭Tagbar
 nnoremap <leader>p :set paste!<CR>
+nnoremap <leader>d :LspDefinition<cr>
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -52,7 +55,10 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tomasr/molokai'
 Plugin 'Lokaltog/vim-easymotion'
-
+Plugin 'lfv89/vim-interestingwords'
+Plugin 'prabirshrestha/vim-lsp'
+Plugin 'jackguo380/vim-lsp-cxx-highlight'
+Plugin 'tpope/vim-commentary'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -78,3 +84,43 @@ let g:airline_symbols.branch = ''
 
 " show match count must at end
 set shortmess-=S
+
+" interestringwords
+nnoremap <silent> <leader>z :call InterestingWords('n')<cr>
+vnoremap <silent> <leader>z :call InterestingWords('v')<cr>
+nnoremap <silent> <leader>x :call UncolorAllWords()<cr>
+
+" Register ccls C++ lanuage server.
+if executable('ccls')
+   au User lsp_setup call lsp#register_server({
+      \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls', '--log-file', '/tmp/ccls-log.txt']},
+      \ 'root_uri': {server_info->lsp#utils#path_to_uri(expand('~'))},
+      \ 'initialization_options': {
+      \   'highlight': { 'lsRanges' : v:true },
+	  \   'cache': {'directory': expand('~/.ccls-cache/ccls') },
+	  \   "index": {"initialBlacklist": ["."]},
+	  \ },
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ })
+endif
+
+" Highlight local variables Green
+"hi LspCxxHlSymFunctionVariable ctermfg=Green guifg=#00FF00 cterm=none gui=none
+
+" Highlight statics Red
+"hi LspCxxHlSymUnknownStatic ctermfg=Red guifg=#FF0000 cterm=none gui=none
+
+" Highlight globals Red with Bold text
+hi LspCxxHlSymFileVariableNone ctermfg=Blue
+hi LspCxxHlSymVariableStatic ctermfg=Blue
+hi LspCxxHlSymUnknownVariableNone ctermfg=Blue
+
+"nn <silent> <M-d> :LspDefinition<cr>
+"nn <silent> <M-r> :LspReferences<cr>
+"nn <f2> :LspRename<cr>
+"nn <silent> <M-a> :LspWorkspaceSymbol<cr>
+"nn <silent> <M-l> :LspDocumentSymbol<cr>
+
+let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
+let g:lsp_cxx_hl_verbose_log = 1
