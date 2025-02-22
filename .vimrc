@@ -41,7 +41,11 @@ nnoremap <leader>i :PluginInstall<CR>
 nnoremap <leader>t :TagbarToggle<CR>    " 通过 t 打开/关闭Tagbar
 nnoremap <leader>p :set paste!<CR>
 nnoremap <leader>d :LspDefinition<cr>
-
+nnoremap <Leader>h <C-w>h
+nnoremap <Leader>j <C-w>j
+nnoremap <Leader>k <C-w>k
+nnoremap <Leader>l <C-w>l
+map q <Nop>
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -90,20 +94,22 @@ nnoremap <silent> <leader>z :call InterestingWords('n')<cr>
 vnoremap <silent> <leader>z :call InterestingWords('v')<cr>
 nnoremap <silent> <leader>x :call UncolorAllWords()<cr>
 
+""" ccls begin
 " Register ccls C++ lanuage server.
 if executable('ccls')
    au User lsp_setup call lsp#register_server({
       \ 'name': 'ccls',
+      \ 'cmd': {server_info->['ccls', '--log-file', '/tmp/ccls-log.txt']},
       \ 'root_uri': {server_info->lsp#utils#path_to_uri(expand('~'))},
-      \ 'cmd': {server_info->['ccls']},
       \ 'initialization_options': {
       \   'highlight': { 'lsRanges' : v:true },
 	  \   'cache': {'directory': expand('~/.ccls-cache/ccls') },
 	  \   "index": {"initialBlacklist": ["."]},
 	  \ },
-      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+      \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc', 'h'],
       \ })
 endif
+
 
 " Highlight local variables Green
 "hi LspCxxHlSymFunctionVariable ctermfg=Green guifg=#00FF00 cterm=none gui=none
@@ -124,3 +130,7 @@ hi LspCxxHlSymUnknownVariableNone ctermfg=Blue
 
 let g:lsp_cxx_hl_log_file = '/tmp/vim-lsp-cxx-hl.log'
 let g:lsp_cxx_hl_verbose_log = 1
+
+""" ccls end
+
+" tagbar
