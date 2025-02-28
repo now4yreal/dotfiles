@@ -1,5 +1,5 @@
 " check_vundle.vim
-if !isdirectory($HOME . '/.vim/undle/Vundle.vim')
+if !isdirectory($HOME . '/.vim/bundle/Vundle.vim')
     silent !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 endif
 set encoding=utf-8
